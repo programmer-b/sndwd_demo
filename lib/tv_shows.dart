@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:sndwd_demo/components.dart';
+import 'package:sndwd_demo/functions.dart';
 import 'package:sndwd_demo/utils.dart';
 
 class TvShows extends StatefulWidget {
@@ -26,10 +28,22 @@ class _TvShowsState extends State<TvShows> {
                   style: boldTextStyle(),
                 ),
                 6.height,
-                _episodeTile(seriesData[index]["episodes"][0]["thumbnail"],
-                    seriesData[index]["episodes"][0]["name"]),
-                _episodeTile(seriesData[index]["episodes"][1]["thumbnail"],
-                    seriesData[index]["episodes"][1]["name"]),
+                _episodeTile(
+                    seriesData[index]["episodes"][0]["thumbnail"],
+                    seriesData[index]["episodes"][0]["name"],
+                    seriesData[index]["episodes"][0]["url"],
+                    context,
+                    index,
+                    seriesData[index]["name"],
+                    seriesData[index]["thumbnail"]),
+                _episodeTile(
+                    seriesData[index]["episodes"][1]["thumbnail"],
+                    seriesData[index]["episodes"][1]["name"],
+                    seriesData[index]["episodes"][1]["url"],
+                    context,
+                    index,
+                    seriesData[index]["name"],
+                    seriesData[index]["thumbnail"]),
               ],
             );
           },
@@ -39,7 +53,15 @@ class _TvShowsState extends State<TvShows> {
   }
 }
 
-Widget _episodeTile(String url, String name) => Column(
+Widget _episodeTile(
+        String episodeImageUrl,
+        String episodeName,
+        String episodeUrl,
+        BuildContext context,
+        int index,
+        String seriesName,
+        String seriesImageUrl) =>
+    Column(
       children: [
         ListTile(
           leading: CachedNetworkImage(
@@ -48,15 +70,28 @@ Widget _episodeTile(String url, String name) => Column(
             progressIndicatorBuilder: (context, url, progress) => const Center(
               child: CircularProgressIndicator(),
             ),
-            imageUrl: url,
+            imageUrl: episodeImageUrl,
             fit: BoxFit.cover,
           ),
           title: Text(
-            name,
+            episodeName,
             style: boldTextStyle(),
           ),
           trailing: IconButton(
-              onPressed: () {},
+              onPressed: () async {
+                showDialog(
+                    context: context,
+                    builder: (context) => downloadComponent());
+                await downloadFile(
+                        url: episodeUrl,
+                        type: "movie",
+                        rootFileName: seriesName,
+                        rootImageUrl: seriesImageUrl,
+                        episodeIndex: index,
+                        episodeImageUrl: episodeImageUrl,
+                        seasonIndex: 1)
+                    .then((value) => finish(context));
+              },
               icon: const Icon(
                 Icons.file_download_outlined,
               )),

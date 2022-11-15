@@ -26,8 +26,6 @@ List<Map<String, dynamic>> moviesData = [
 List<Map<String, dynamic>> seriesData = [
   {
     "name": "Series 1",
-    "url":
-        "https://assets.mixkit.co/videos/preview/mixkit-lovers-walking-through-a-lavender-field-4530-large.mp4",
     "thumbnail": image4,
     "type": "tv",
     "episodes": [
@@ -47,8 +45,6 @@ List<Map<String, dynamic>> seriesData = [
   },
   {
     "name": "Series 2",
-    "url":
-        "https://assets.mixkit.co/videos/preview/mixkit-fireworks-illuminating-the-beach-sky-4157-large.mp4",
     "thumbnail": image5,
     "type": "tv",
     "episodes": [
@@ -68,8 +64,6 @@ List<Map<String, dynamic>> seriesData = [
   },
   {
     "name": "Series 3",
-    "url":
-        "https://assets.mixkit.co/videos/preview/mixkit-street-with-people-walking-at-dusk-3428-large.mp4",
     "thumbnail": image6,
     "type": "tv",
     "episodes": [

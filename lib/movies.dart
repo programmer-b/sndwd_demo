@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:sndwd_demo/components.dart';
 import 'package:sndwd_demo/functions.dart';
 import 'package:sndwd_demo/utils.dart';
 
@@ -64,23 +64,4 @@ class _MoviesState extends State<Movies> {
       );
 }
 
-Widget downloadComponent() => Container(
-      decoration: const BoxDecoration(
-          color: Colors.black12,
-          borderRadius: BorderRadius.all(Radius.circular(12))),
-      alignment: Alignment.center,
-      padding: const EdgeInsets.all(12),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const SpinKitFadingCircle(
-            color: Colors.white,
-          ),
-          8.height,
-          Text(
-            "Preparing download ...",
-            style: primaryTextStyle(color: Colors.white),
-          )
-        ],
-      ),
-    );
+

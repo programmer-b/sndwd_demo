@@ -94,23 +94,34 @@ Stream<List<FileSystemEntity>> fileStream(
   }
 }
 
-Future<String?> downloadFile({
-  required String url,
-  required String type,
-  required String rootFileName,
-  required rootImageUrl,
-  int? episodeIndex,
-  String? episodeImageUrl,
-}) async {
+Future<String?> downloadFile(
+    {required String url,
+    required String type,
+    required String rootFileName,
+    required rootImageUrl,
+    int? episodeIndex,
+    String? episodeImageUrl,
+    int? seasonIndex}) async {
   String path = await prepareFileDownloadPath(
       type: type,
       rootFileName: rootFileName,
       rootImageUrl: rootImageUrl,
       episodeImageUrl: episodeImageUrl,
       episodeIndex: episodeIndex);
+  if (type == 'tv') {
+    if (episodeIndex == null ||
+        seasonIndex == null ||
+        episodeImageUrl == null) {
+      throw ArgumentError("Argument error");
+    }
+  }
 
   final String? taskId = await FlutterDownloader.enqueue(
-      url: url, savedDir: path, fileName: rootFileName);
+      url: url,
+      savedDir: path,
+      fileName: type == 'movie'
+          ? rootFileName
+          : "$rootFileName Season $seasonIndex Episode $episodeIndex");
 
   if (taskId != null) {
     await _storeString(path: "$path/$keyTaskId.txt", value: taskId);
